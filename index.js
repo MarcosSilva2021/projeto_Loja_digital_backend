@@ -1,10 +1,24 @@
-const express = require('express');
+import express from 'express';
+
 const app = express();
+const port = 3000;
 
 app.get('/', (req, res) => {
-  res.send('Servidor rodando com sucesso!');
+  res.send('enviando dados');
 });
 
-app.listen(3000, () => {
+app.post('/', (req, res) => {
+  res.send('criando');
+});
+
+app.put('/', (req, res) => {
+  res.send('atualizando');
+});
+
+app.delete('/', (req, res) => {
+  res.send('excluindo');
+});
+
+app.listen(port, () => {
   console.log('Servidor ativo em http://localhost:3000');
 });
