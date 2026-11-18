@@ -13,3 +13,6 @@ yarn-error.log*
 # Arquivos de sistema operacional
 .DS_Store
 Thumbs.db
+
+# Banco de dado em memória (SqLite)
+database.sqlite
