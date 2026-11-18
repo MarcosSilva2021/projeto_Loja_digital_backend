@@ -1,5 +1,7 @@
 import express from 'express';
+import './models/relations.js';
 import { connectDatabase } from './connection.js';
+
 
 const app = express();
 const port = 3000;
