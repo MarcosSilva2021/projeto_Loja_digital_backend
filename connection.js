@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
 
 
-const sequelize = new Sequelize('loja_digital', 'root', '', {
+const sequelize = new Sequelize('loja_digital', 'root', '3306', {
   host: 'localhost',
   dialect: 'sqlite',
   storage: './database.sqlite', // O SQLite usa isso no lugar do servidor
