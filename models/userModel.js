@@ -1,5 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
-import {sequelize} from '../connection.js'; // Ajuste o caminho conforme a sua pasta
+import {sequelize} from '../connection.js';
 
 class User extends Model {}
 
@@ -15,6 +15,10 @@ User.init(
       allowNull: false,
       unique: true,
     },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   },
   {
     sequelize,             
