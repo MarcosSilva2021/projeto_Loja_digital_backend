@@ -12,5 +12,5 @@ app.use(router);
 connectDatabase();
 
 app.listen(port, () => {
-  console.log('Servidor ativo em http://localhost:3000');
+  console.log(`Servidor ativo em http://localhost:${port}`);
 });

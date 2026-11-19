@@ -5,7 +5,7 @@ const createUser = async (req, res) => {
 
     try {
         const userDB = await User.create(user);
-        res.json({ sucess: true, data: userDB });
+        res.json({ success: true, data: userDB });
     } catch (error) {
         res.json({ success: false, data: { message: error.message } })
     }

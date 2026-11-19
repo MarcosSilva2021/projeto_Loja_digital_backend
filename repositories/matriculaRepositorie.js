@@ -9,7 +9,7 @@ const matricularAluno = async (req, res) => {
         const turmaDB = await Turma.findByPk(turma);
         await userDB.addTurma(turmaDB);
 
-        res.json({ success: true, data: `Aluno ${userDB.firstName} foi matriculado na turma ${turmaDB.name}` })
+        res.json({ success: true, data: `Aluno ${userDB.nome} foi matriculado na turma ${turmaDB.name}` })
     } catch (error) {
         res.json({ success: false, data: { message: error.message } })
     }
