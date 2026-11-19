@@ -3,6 +3,8 @@ import { alterUser, createUser, deleteUser, getAll, getByName, getOne} from '../
 import { alterTurma, createTurma, deleteTurma, getTurma } from '../repositories/turmaRepositorie.js';
 import { desmatricularAluno, getAllStudentsByTurma, getAllTurmasByStudent, matricularAluno } from '../repositories/matriculaRepositorie.js';
 import {createProduct, deleteProduct, getAllProducts, getProductById, updateProduct} from '../repositories/productRepositorie.js';
+import {createCategory, deleteCategory, getAllCategories, getCategoryById, updateCategory} from "../repositories/categoryRepositorie.js";
+
 
 const router = express.Router();
 
@@ -24,5 +26,10 @@ router.route("/v1/matricula/user/:user").get(getAllTurmasByStudent);
 // rotas do produto
 router.route("v1/product").post(createProduct).get(getAllProducts);
 router.route("v1/product/:id").get(getProductById).put(updateProduct).delete(deleteProduct);
+
+// rotas da Categoria
+router.route("/v1/category").post(createCategory).get(getAllCategories);
+router.route("/v1/category/:id").get(getCategoryById).put(updateCategory).delete(deleteCategory);
+
 
 export default router;
