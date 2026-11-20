@@ -9,7 +9,7 @@ const port = 3000;
 app.use(express.json());
 app.use(router);
 
-connectDatabase();
+await connectDatabase();
 
 app.listen(port, () => {
   console.log(`Servidor ativo em http://localhost:${port}`);
