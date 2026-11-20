@@ -4,7 +4,7 @@ import { alterTurma, createTurma, deleteTurma, getTurma } from '../repositories/
 import { desmatricularAluno, getAllStudentsByTurma, getAllTurmasByStudent, matricularAluno } from '../repositories/matriculaRepositorie.js';
 import {createProduct, deleteProduct, getAllProducts, getProductById, updateProduct} from '../repositories/productRepositorie.js';
 import {createCategory, deleteCategory, getAllCategories, getCategoryById, updateCategory} from "../repositories/categoryRepositorie.js";
-
+import {createProductImage, getAllProductImages, getImagesByProductId, updateProductImage, deleteProductImage} from "../repositories/productImageReposiorie.js";
 
 const router = express.Router();
 
@@ -31,5 +31,9 @@ router.route("v1/product/:id").get(getProductById).put(updateProduct).delete(del
 router.route("/v1/category").post(createCategory).get(getAllCategories);
 router.route("/v1/category/:id").get(getCategoryById).put(updateCategory).delete(deleteCategory);
 
+// rotas das Imagens do Produto
+router.route("/v1/product-image").post(createProductImage).get(getAllProductImages);
+router.route("/v1/product-image/product/:product_id").get(getImagesByProductId);
+router.route("/v1/product-image/:id").put(updateProductImage).delete(deleteProductImage);
 
 export default router;
