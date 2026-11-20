@@ -134,6 +134,185 @@ Este guia explica como testar e consultar todas as rotas do projeto utilizando c
 
 ---
 
+## 4. Rotas de Produtos (`/v1/product`)
+
+### Criar Produto
+* **Método:** `POST`
+* **URL:** `http://localhost:3000/v1/product`
+* **Body (JSON):**
+```json
+{
+  "enabled": true,
+  "name": "Tênis Nike Air Max",
+  "slug": "tenis-nike-air-max",
+  "use_in_menu": true,
+  "stock": 15,
+  "description": "Tênis esportivo confortável para corrida",
+  "price": 599.90,
+  "price_with_discount": 499.90
+}
+```
+* **Resposta Esperada:** Objeto do produto criado com o `id` gerado automaticamente.
+
+### Listar Todos os Produtos
+* **Método:** `GET`
+* **URL:** `http://localhost:3000/v1/product`
+* **Body:** Não requer.
+* **Resposta Esperada:** Lista (array) com todos os produtos cadastrados no banco.
+
+### Buscar Produto por ID
+* **Método:** `GET`
+* **URL:** `http://localhost:3000/v1/product/:id`
+* **Exemplo de Consulta:** `http://localhost:3000/v1/product/1`
+* **Body:** Não requer.
+
+### Atualizar Produto
+* **Método:** `PUT`
+* **URL:** `http://localhost:3000/v1/product/:id`
+* **Exemplo de Consulta:** `http://localhost:3000/v1/product/1`
+* **Body (JSON):** *(envie apenas os campos que deseja alterar)*
+```json
+{
+  "stock": 10,
+  "price_with_discount": 450.00
+}
+```
+
+### Deletar Produto
+* **Método:** `DELETE`
+* **URL:** `http://localhost:3000/v1/product/:id`
+* **Exemplo de Consulta:** `http://localhost:3000/v1/product/1`
+* **Body:** Não requer. *(Nota: Ao deletar o produto, suas imagens vinculadas também são apagadas automaticamente via `CASCADE`).*
+
+---
+
+## 5. Rotas de Categorias (`/v1/category`)
+
+### Criar Categoria
+* **Método:** `POST`
+* **URL:** `http://localhost:3000/v1/category`
+* **Body (JSON):**
+```json
+{
+  "name": "Calçados",
+  "slug": "calcados",
+  "use_in_menu": true
+}
+```
+* **Resposta Esperada:** Objeto da categoria criada com o `id` gerado automaticamente.
+
+### Listar Todas as Categorias
+* **Método:** `GET`
+* **URL:** `http://localhost:3000/v1/category`
+* **Body:** Não requer.
+
+### Buscar Categoria por ID
+* **Método:** `GET`
+* **URL:** `http://localhost:3000/v1/category/:id`
+* **Exemplo de Consulta:** `http://localhost:3000/v1/category/1`
+* **Body:** Não requer.
+
+### Atualizar Categoria
+* **Método:** `PUT`
+* **URL:** `http://localhost:3000/v1/category/:id`
+* **Exemplo de Consulta:** `http://localhost:3000/v1/category/1`
+* **Body (JSON):**
+```json
+{
+  "name": "Calçados Esportivos",
+  "use_in_menu": false
+}
+```
+
+### Deletar Categoria
+* **Método:** `DELETE`
+* **URL:** `http://localhost:3000/v1/category/:id`
+* **Exemplo de Consulta:** `http://localhost:3000/v1/category/1`
+* **Body:** Não requer.
+
+---
+
+## 6. Rotas de Produto e Categoria - Relação N:N (`/v1/product-category`)
+
+> **Importante:** Para testar estas rotas, certifique-se de que o produto e a categoria informados na URL já existam no banco de dados.
+
+### Vincular Categoria a um Produto
+* **Método:** `POST`
+* **URL:** `http://localhost:3000/v1/product-category/:productId/:categoryId`
+* **Exemplo de Consulta:** `http://localhost:3000/v1/product-category/1/1` *(vincula a categoria de ID 1 ao produto de ID 1)*.
+* **Body:** Não requer.
+
+### Desvincular Categoria de um Produto
+* **Método:** `DELETE`
+* **URL:** `http://localhost:3000/v1/product-category/:productId/:categoryId`
+* **Exemplo de Consulta:** `http://localhost:3000/v1/product-category/1/1` *(remove o vínculo entre o produto 1 e a categoria 1)*.
+* **Body:** Não requer.
+
+### Consultar Todas as Categorias de um Produto
+* **Método:** `GET`
+* **URL:** `http://localhost:3000/v1/product-category/product/:productId`
+* **Exemplo de Consulta:** `http://localhost:3000/v1/product-category/product/1`
+* **Body:** Não requer.
+* **Resposta Esperada:** Dados do produto selecionado acompanhados de um array `Categories` com as categorias vinculadas a ele.
+
+### Consultar Todos os Produtos de uma Categoria
+* **Método:** `GET`
+* **URL:** `http://localhost:3000/v1/product-category/category/:categoryId`
+* **Exemplo de Consulta:** `http://localhost:3000/v1/product-category/category/1`
+* **Body:** Não requer.
+* **Resposta Esperada:** Dados da categoria selecionada acompanhados de um array `Products` com os produtos pertencentes a ela.
+
+---
+
+## 7. Rotas de Imagens do Produto (`/v1/product-image`)
+
+> **Importante:** O campo `product_id` deve corresponder ao `id` de um produto já cadastrado no banco.
+
+### Cadastrar Imagem para um Produto
+* **Método:** `POST`
+* **URL:** `http://localhost:3000/v1/product-image`
+* **Body (JSON):**
+```json
+{
+  "product_id": 1,
+  "enabled": true,
+  "path": "/uploads/produtos/tenis-nike-01.jpg"
+}
+```
+* **Resposta Esperada:** Objeto da imagem cadastrada com o `id` gerado automaticamente.
+
+### Listar Todas as Imagens
+* **Método:** `GET`
+* **URL:** `http://localhost:3000/v1/product-image`
+* **Body:** Não requer.
+
+### Consultar Todas as Imagens de um Produto
+* **Método:** `GET`
+* **URL:** `http://localhost:3000/v1/product-image/product/:product_id`
+* **Exemplo de Consulta:** `http://localhost:3000/v1/product-image/product/1`
+* **Body:** Não requer.
+* **Resposta Esperada:** Lista (array) com todas as imagens vinculadas ao produto de ID `1`.
+
+### Atualizar Imagem
+* **Método:** `PUT`
+* **URL:** `http://localhost:3000/v1/product-image/:id`
+* **Exemplo de Consulta:** `http://localhost:3000/v1/product-image/1`
+* **Body (JSON):**
+```json
+{
+  "enabled": false,
+  "path": "/uploads/produtos/tenis-nike-01-novo.jpg"
+}
+```
+
+### Deletar Imagem
+* **Método:** `DELETE`
+* **URL:** `http://localhost:3000/v1/product-image/:id`
+* **Exemplo de Consulta:** `http://localhost:3000/v1/product-image/1`
+* **Body:** Não requer.
+
+---
+
 ## Resumo Rápido das Rotas
 
 | Recurso | Método | Endpoint | Descrição |
@@ -153,3 +332,23 @@ Este guia explica como testar e consultar todas as rotas do projeto utilizando c
 | **Matrícula** | `DELETE` | `/v1/matricula/:user/:turma` | Remove aluno da turma |
 | **Matrícula** | `GET` | `/v1/matricula/turma/:turma` | Lista alunos da turma |
 | **Matrícula** | `GET` | `/v1/matricula/user/:user` | Lista turmas do aluno |
+| **Produto** | `POST` | `/v1/product` | Cadastra um novo produto |
+| **Produto** | `GET` | `/v1/product` | Lista todos os produtos |
+| **Produto** | `GET` | `/v1/product/:id` | Busca produto pelo ID |
+| **Produto** | `PUT` | `/v1/product/:id` | Atualiza dados do produto |
+| **Produto** | `DELETE` | `/v1/product/:id` | Remove produto |
+| **Categoria** | `POST` | `/v1/category` | Cadastra uma nova categoria |
+| **Categoria** | `GET` | `/v1/category` | Lista todas as categorias |
+| **Categoria** | `GET` | `/v1/category/:id` | Busca categoria pelo ID |
+| **Categoria** | `PUT` | `/v1/category/:id` | Atualiza dados da categoria |
+| **Categoria** | `DELETE` | `/v1/category/:id` | Remove categoria |
+| **Produto/Categoria** | `POST` | `/v1/product-category/:productId/:categoryId` | Vincula categoria ao produto |
+| **Produto/Categoria** | `DELETE` | `/v1/product-category/:productId/:categoryId` | Remove categoria do produto |
+| **Produto/Categoria** | `GET` | `/v1/product-category/product/:productId` | Lista categorias do produto |
+| **Produto/Categoria** | `GET` | `/v1/product-category/category/:categoryId` | Lista produtos da categoria |
+| **Imagem Produto** | `POST` | `/v1/product-image` | Cadastra imagem para um produto |
+| **Imagem Produto** | `GET` | `/v1/product-image` | Lista todas as imagens |
+| **Imagem Produto** | `GET` | `/v1/product-image/product/:product_id` | Lista imagens de um produto |
+| **Imagem Produto** | `PUT` | `/v1/product-image/:id` | Atualiza dados da imagem |
+| **Imagem Produto** | `DELETE` | `/v1/product-image/:id` | Remove imagem |
+
