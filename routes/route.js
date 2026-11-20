@@ -31,6 +31,12 @@ router.route("/v1/product/:id").get(getProductById).put(updateProduct).delete(de
 router.route("/v1/category").post(createCategory).get(getAllCategories);
 router.route("/v1/category/:id").get(getCategoryById).put(updateCategory).delete(deleteCategory);
 
+// rotas de Produto e Categoria (Relação N:N)
+router.route("/v1/product-category/:productId/:categoryId").post(vincularCategoria).delete(desvincularCategoria);
+router.route("/v1/product-category/product/:productId").get(getCategoriesByProduct);
+router.route("/v1/product-category/category/:categoryId").get(getProductsByCategory);
+
+
 // rotas das Imagens do Produto
 router.route("/v1/product-image").post(createProductImage).get(getAllProductImages);
 router.route("/v1/product-image/product/:product_id").get(getImagesByProductId);
