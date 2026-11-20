@@ -5,6 +5,7 @@ import { desmatricularAluno, getAllStudentsByTurma, getAllTurmasByStudent, matri
 import {createProduct, deleteProduct, getAllProducts, getProductById, updateProduct} from '../repositories/productRepositorie.js';
 import {createCategory, deleteCategory, getAllCategories, getCategoryById, updateCategory} from "../repositories/categoryRepositorie.js";
 import {createProductImage, getAllProductImages, getImagesByProductId, updateProductImage, deleteProductImage} from "../repositories/productImageReposiorie.js";
+import {vincularCategoria, desvincularCategoria, getCategoriesByProduct, getProductsByCategory,} from "../repositories/productCategoryRepositorie.js";
 
 const router = express.Router();
 
