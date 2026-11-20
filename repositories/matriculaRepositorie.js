@@ -7,7 +7,12 @@ const matricularAluno = async (req, res) => {
     try {
         const userDB = await User.findByPk(user);
         const turmaDB = await Turma.findByPk(turma);
-        await userDB.addTurma(turmaDB);
+        
+        if (!userDB || !turmaDB) {
+            return res.json({ success: false, data: { message: "Usuário ou Turma não encontrados" } });
+        }
+        
+        await userDB.addTurma(turmaDB);     
 
         res.json({ success: true, data: `Aluno ${userDB.nome} foi matriculado na turma ${turmaDB.name}` })
     } catch (error) {
