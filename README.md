@@ -1,6 +1,12 @@
-# API Loja Digital - Backend (Node.js + Express + Sequelize)
+# API Loja Digital - Backend 
 
-API RESTful desenvolvida em Node.js com Express e Sequelize (SQLite) para gerenciamento de usuários, turmas, matrículas, produtos, categorias e imagens.
+API RESTful desenvolvida em Node.js com Express e Sequelize (SQLite e MySQL) para gerenciamento de usuários, turmas, matrículas, produtos, categorias e imagens.
+
+---
+
+## Objetivo do Projeto
+
+Aplicar técnicas e tecnologias de desenvolvimento backend para construir uma API completa, estruturada e funcional, contemplando modelagem de dados, relacionamentos e operações CRUD.
 
 ---
 
@@ -9,11 +15,55 @@ API RESTful desenvolvida em Node.js com Express e Sequelize (SQLite) para gerenc
 * **Node.js** (ES Modules)
 * **Express** (Roteamento e middlewares)
 * **Sequelize** (ORM e relacionamentos `1:N` e `N:N`)
-* **SQLite3** (Banco de dados local)
+* **SQLite3** (Banco de dados de teste/desenvolvimento)
+* **MySQL** (Banco de dados relacional local)
+
+---
+
+## Estrutura de Pastas
+
+```text
+├── models/                                  # Modelos e associações do Sequelize
+│   ├── categoryModel.js                     # Modelo de categorias
+│   ├── productImageModel.js                 # Modelo de imagens dos produtos
+│   ├── productModel.js                      # Modelo de produtos
+│   ├── relations.js                         # Definição dos relacionamentos (1:N e N:N)
+│   ├── turmaModel.js                        # Modelo de turmas
+│   └── userModel.js                         # Modelo de usuários
+├── repositories/                            # Camada de acesso e manipulação de dados
+│   ├── categoryRepositorie.js
+│   ├── matriculaRepositorie.js
+│   ├── productCategoryRepositorie.js
+│   ├── productImageReposiorie.js
+│   ├── productRepositorie.js
+│   ├── turmaRepositorie.js
+│   └── userRepositorie.js
+├── routes/                                  # Definição das rotas da API
+│   └── route.js
+├── scripts/                                 # Utilitários de linha de comando (CLI)
+│   └── consultarBancoDeDadosEmMemoria.js    # Script de inspeção do banco SQLite
+├── .gitignore                               # Arquivos ignorados pelo Git
+├── connection.js                            # Configuração da conexão com o banco de dados
+├── database.sqlite                          # Arquivo do banco de dados SQLite
+├── documentacao-rotas-api.md                # Documentação detalhada dos endpoints
+├── guia-consulta-sqlite.md                  # Guia de uso do script de consulta SQL
+├── index.js                                 # Ponto de entrada da aplicação e servidor Express
+├── package-lock.json
+├── package.json
+└── README.md
+```
 
 ---
 
 ## Como Executar o Projeto
+
+### Pré-requisitos (Banco de Dados MySQL)
+Antes de iniciar, certifique-se de criar a conexão local no MySQL com as seguintes configurações:
+* **Nome do banco de dados:** `loja_digital`
+* **Usuário:** `root`
+* **Porta de conexão:** `3306`
+
+### Passo a Passo
 
 1. **Instale as dependências:**
    ```bash
@@ -33,13 +83,13 @@ API RESTful desenvolvida em Node.js com Express e Sequelize (SQLite) para gerenc
 ### 1. Endpoints Principais da API
 A API utiliza o prefixo `/v1` e trabalha com envio e retorno de dados em formato JSON:
 
-* **Usuários (`/v1/user`):** Cadastro (`POST`), listagem geral (`GET`), busca por nome (`/v1/user/:name`), busca por ID (`/v1/user/id/:user`), atualização (`PUT`) e exclusão (`DELETE`).
-* **Turmas (`/v1/turma`):** Cadastro (`POST`), listagem geral (`GET`), busca por ID (`/v1/turma/:turma`), atualização (`PUT`) e exclusão (`DELETE`).
-* **Matrículas (`/v1/matricula`):** Vincular aluno à turma (`POST /v1/matricula/:user/:turma`), desmatricular (`DELETE`), listar alunos de uma turma (`/v1/matricula/turma/:turma`) e listar turmas de um aluno (`/v1/matricula/user/:user`).
-* **Produtos (`/v1/product`):** Cadastro (`POST`), listagem geral (`GET`), busca por ID (`/v1/product/:id`), atualização (`PUT`) e exclusão (`DELETE`).
-* **Categorias (`/v1/category`):** Cadastro (`POST`), listagem geral (`GET`), busca por ID (`/v1/category/:id`), atualização (`PUT`) e exclusão (`DELETE`).
-* **Produto & Categoria (`/v1/product-category`):** Vincular categoria ao produto (`POST /v1/product-category/:productId/:categoryId`), desvincular (`DELETE`), listar categorias de um produto (`/v1/product-category/product/:productId`) e listar produtos de uma categoria (`/v1/product-category/category/:categoryId`).
-* **Imagens do Produto (`/v1/product-image`):** Cadastro (`POST`), listagem geral (`GET`), consulta por produto (`/v1/product-image/product/:product_id`), atualização (`PUT /v1/product-image/:id`) e exclusão (`DELETE /v1/product-image/:id`).
+* **Usuários (`/v1/user`):** Cadastro (`POST`), listagem geral (`GET`), busca por nome (`GET /v1/user/:name`), busca por ID (`GET /v1/user/id/:user`), atualização (`PUT`) e exclusão (`DELETE`).
+* **Turmas (`/v1/turma`):** Cadastro (`POST`), listagem geral (`GET`), busca por ID (`GET /v1/turma/:turma`), atualização (`PUT`) e exclusão (`DELETE`).
+* **Matrículas (`/v1/matricula`):** Vincular aluno à turma (`POST /v1/matricula/:user/:turma`), desmatricular (`DELETE`), listar alunos de uma turma (`GET /v1/matricula/turma/:turma`) e listar turmas de um aluno (`GET /v1/matricula/user/:user`).
+* **Produtos (`/v1/product`):** Cadastro (`POST`), listagem geral (`GET`), busca por ID (`GET /v1/product/:id`), atualização (`PUT`) e exclusão (`DELETE`).
+* **Categorias (`/v1/category`):** Cadastro (`POST`), listagem geral (`GET`), busca por ID (`GET /v1/category/:id`), atualização (`PUT`) e exclusão (`DELETE`).
+* **Produto & Categoria (`/v1/product-category`):** Vincular categoria ao produto (`POST /v1/product-category/:productId/:categoryId`), desvincular (`DELETE`), listar categorias de um produto (`GET /v1/product-category/product/:productId`) e listar produtos de uma categoria (`GET /v1/product-category/category/:categoryId`).
+* **Imagens do Produto (`/v1/product-image`):** Cadastro (`POST`), listagem geral (`GET`), consulta por produto (`GET /v1/product-image/product/:product_id`), atualização (`PUT /v1/product-image/:id`) e exclusão (`DELETE /v1/product-image/:id`).
 
 ### 2. Consulta Direta ao Banco de Dados (CLI)
 Para inspecionar os dados salvos no SQLite diretamente pelo terminal sem ferramentas externas, utilize o script configurado no `package.json`:
@@ -52,10 +102,11 @@ Para inspecionar os dados salvos no SQLite diretamente pelo terminal sem ferrame
 
 ## Funcionalidades a Serem Implementadas (Roadmap)
 
-* [ ] **Imagens do Produto (Upload e Gerenciamento Completo):** Finalizar o fluxo de upload de arquivos físicos no servidor, validações e vinculação automática com os produtos.
+* [ ] **Imagens do Produto (Upload e Gerenciamento Completo):** Finalizar o fluxo de upload de arquivos físicos no servidor, inserindo o caminho da imagem na pasta `public` do frontend.
 * [ ] **Opções do Produto:** Criar modelagem, relacionamentos e endpoints para variações de produtos (Opções).
-* [ ] **Autenticação e Login com JWT:** Implementar rota de login (`/v1/user/token`), criptografia de senhas (bcrypt) e middleware de proteção de rotas privadas via JSON Web Token (JWT).
+* [ ] **Autenticação e Login com JWT:** Implementar rota de login (`/v1/user/token`), criptografia de senhas (`bcrypt`) e middleware de proteção de rotas privadas via JSON Web Token (JWT).
 * [ ] **Conexão com o Frontend:** Configurar CORS, ajustar padrões de resposta/paginação e integrar a API com a interface web da Loja Digital.
+* [ ] **Documentação Online com Swagger:** Adicionar documentação interativa dos endpoints.
 
 ---
 
