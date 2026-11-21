@@ -17,7 +17,7 @@ ProductImage.init(
     enabled: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
-      defaultValue: false, // O Sequelize converte false/true para 0/1 no banco
+      defaultValue: false,
     },
     path: {
       type: DataTypes.STRING,
@@ -28,7 +28,7 @@ ProductImage.init(
     sequelize,
     modelName: 'ProductImage',
     tableName: 'product_images',
-    timestamps: false, // Não solicitado neste requisito
+    timestamps: false
   }
 );
 

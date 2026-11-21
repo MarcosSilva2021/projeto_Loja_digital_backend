@@ -5,20 +5,19 @@ const createUser = async (req, res) => {
 
     try {
         const userDB = await User.create(user);
-        res.json({ success: true, data: userDB });
+        res.status(201).json({ success: true, data: userDB });
     } catch (error) {
-        res.json({ success: false, data: { message: error.message } })
+        res.status(400).json({ success: false, data: { message: error.message } })
     }
 }
 
 const getAll = async (req, res) => {
-    console.log(res.locals);
-    
+        
     try {
         const allUsers = await User.findAll();
-        res.json({ success: true, data: allUsers });
+        res.status(200).json({ success: true, data: allUsers });
     } catch (error) {
-        res.json({ success: false, data: { message: error.message } })
+        res.status(500).json({ success: false, data: { message: error.message } })
     }
 }
 
@@ -27,9 +26,9 @@ const getOne = async (req, res) => {
 
     try {
         const userDB = await User.findByPk(user);
-        res.json({ success: true, data: userDB })
+        res.status(200).json({ success: true, data: userDB })
     } catch (error) {
-        res.json({ success: false, data: { message: error.message } })
+        res.status(500).json({ success: false, data: { message: error.message } })
     }
 }
 
@@ -38,9 +37,9 @@ const getByName = async (req, res) => {
 
     try {
         const userDB = await User.findOne({ where: { nome : name } });
-        res.json({ success: true, data: userDB })
+        res.status(200).json({ success: true, data: userDB })
     } catch (error) {
-        res.json({ success: false, data: { message: error.message } })
+        res.status(404).json({ success: false, data: { message: error.message } })
     }
 }
 
@@ -50,9 +49,9 @@ const alterUser = async (req, res) => {
 
     try {
         const userDB = await User.update(newData, { where: { id: user } });
-        res.json({ success: true, data: userDB })
+        res.status(200).json({ success: true, data: userDB })
     } catch (error) {
-        res.json({ success: false, data: { message: error.message } })
+        res.status(400).json({ success: false, data: { message: error.message } })
     }
 }
 
@@ -61,9 +60,9 @@ const deleteUser = async (req, res) => {
 
     try {
         const userDB = await User.destroy({ where: { id: user } });
-        res.json({ success: true, data: userDB })
+        res.status(200).json({ success: true, data: userDB })
     } catch (error) {
-        res.json({ success: false, data: { message: error.message } })
+        res.status(500).json({ success: false, data: { message: error.message } })
     }
 }
 

@@ -53,7 +53,7 @@ Para inspecionar os dados salvos no SQLite diretamente pelo terminal sem ferrame
 ## Funcionalidades a Serem Implementadas (Roadmap)
 
 * [ ] **Imagens do Produto (Upload e Gerenciamento Completo):** Finalizar o fluxo de upload de arquivos físicos no servidor, validações e vinculação automática com os produtos.
-* [ ] **Opções do Produto:** Criar modelagem, relacionamentos e endpoints para variações de produtos (ex: tamanho, cor, voltagem, especificações).
+* [ ] **Opções do Produto:** Criar modelagem, relacionamentos e endpoints para variações de produtos (Opções).
 * [ ] **Autenticação e Login com JWT:** Implementar rota de login (`/v1/user/token`), criptografia de senhas (bcrypt) e middleware de proteção de rotas privadas via JSON Web Token (JWT).
 * [ ] **Conexão com o Frontend:** Configurar CORS, ajustar padrões de resposta/paginação e integrar a API com a interface web da Loja Digital.
 
