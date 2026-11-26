@@ -6,14 +6,19 @@ import {createProduct, deleteProduct, getAllProducts, getProductById, updateProd
 import {createCategory, deleteCategory, getAllCategories, getCategoryById, updateCategory} from "../repositories/categoryRepositorie.js";
 import {createProductImage, getAllProductImages, getImagesByProductId, updateProductImage, deleteProductImage} from "../repositories/productImageReposiorie.js";
 import {vincularCategoria, desvincularCategoria, getCategoriesByProduct, getProductsByCategory,} from "../repositories/productCategoryRepositorie.js";
+import { authenticate } from '../middleware/authenticate.js';
+import { login } from '../repositories/authRepositorie.js';
 
 const router = express.Router();
 
 // rotas do Usuário
 router.route("/v1/user").post(createUser);
-router.route("/v1/user").get(getAll);
+router.route("/v1/user").get(authenticate, getAll);
 router.route("/v1/user/:name").get(getByName);
 router.route("/v1/user/id/:user").get(getOne).put(alterUser).delete(deleteUser);
+
+// rotas do Login
+router.route("/v1/login").post(login);
 
 // rotas da turma
 router.route("/v1/turma").post(createTurma);
